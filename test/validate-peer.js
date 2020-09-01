@@ -3,12 +3,12 @@ const { randomBytes } = require('crypto')
 const { test } = require('tap')
 const { once } = require('nonsynchronous')
 const { dhtBootstrap } = require('./util')
-const hyperswarm = require('../')
+const dwebswarm = require('../')
 
 test('validatePeer default', async () => {
   const { bootstrap, closeDht } = await dhtBootstrap()
-  const swarm1 = hyperswarm({ bootstrap })
-  const swarm2 = hyperswarm({ bootstrap })
+  const swarm1 = dwebswarm({ bootstrap })
+  const swarm2 = dwebswarm({ bootstrap })
   const key = randomBytes(32)
   swarm1.join(key, {
     announce: true,
@@ -30,8 +30,8 @@ test('validatePeer default', async () => {
 
 test('validatePeer host + peer-rejected event', async () => {
   const { bootstrap, closeDht } = await dhtBootstrap()
-  const swarm1 = hyperswarm({ bootstrap })
-  const swarm2 = hyperswarm({ bootstrap, validatePeer: (peer) => peer.host === '0.0.0.256' })
+  const swarm1 = dwebswarm({ bootstrap })
+  const swarm2 = dwebswarm({ bootstrap, validatePeer: (peer) => peer.host === '0.0.0.256' })
   const key = randomBytes(32)
   swarm1.join(key, {
     announce: true,
@@ -53,8 +53,8 @@ test('validatePeer host + peer-rejected event', async () => {
 
 test('validatePeer disallow remote', async ({ is }) => {
   const { bootstrap, closeDht } = await dhtBootstrap()
-  const swarm1 = hyperswarm({ bootstrap })
-  const swarm2 = hyperswarm({ bootstrap, validatePeer: (peer) => peer.local })
+  const swarm1 = dwebswarm({ bootstrap })
+  const swarm2 = dwebswarm({ bootstrap, validatePeer: (peer) => peer.local })
   const key = randomBytes(32)
   swarm1.join(key, {
     announce: true,

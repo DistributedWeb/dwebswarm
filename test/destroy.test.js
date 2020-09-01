@@ -2,10 +2,10 @@
 const { randomBytes } = require('crypto')
 const { test } = require('tap')
 const { once, promisifyMethod } = require('nonsynchronous')
-const hyperswarm = require('../')
+const dwebswarm = require('../')
 
 test('listening and destroy', async ({ pass, is }) => {
-  const swarm = hyperswarm()
+  const swarm = dwebswarm()
   promisifyMethod(swarm, 'listen')
   await swarm.listen()
   pass('swarm is listening')
@@ -15,7 +15,7 @@ test('listening and destroy', async ({ pass, is }) => {
 })
 
 test('listening and destroy twice', async ({ pass, is }) => {
-  const swarm = hyperswarm()
+  const swarm = dwebswarm()
   promisifyMethod(swarm, 'listen')
   await swarm.listen()
   pass('swarm is listening')
@@ -26,16 +26,16 @@ test('listening and destroy twice', async ({ pass, is }) => {
 })
 
 test('destroy right away', async ({ pass, doesNotThrow }) => {
-  const swarm = hyperswarm()
+  const swarm = dwebswarm()
   doesNotThrow(() => swarm.destroy())
-  const swarm2 = hyperswarm()
+  const swarm2 = dwebswarm()
   promisifyMethod(swarm2, 'destroy')
   await swarm2.destroy()
   pass('closed')
 })
 
 test('destroy right away after listen', async ({ pass }) => {
-  const swarm = hyperswarm()
+  const swarm = dwebswarm()
   swarm.listen()
   swarm.destroy()
   await once(swarm, 'close')
@@ -43,21 +43,21 @@ test('destroy right away after listen', async ({ pass }) => {
 })
 
 test('address after destroy', async ({ throws }) => {
-  const swarm = hyperswarm()
+  const swarm = dwebswarm()
   swarm.listen()
   swarm.destroy()
   throws(() => swarm.address(), Error('swarm has been destroyed'))
 })
 
 test('listen after destroy', async ({ throws }) => {
-  const swarm = hyperswarm()
+  const swarm = dwebswarm()
   swarm.listen()
   swarm.destroy()
   throws(() => swarm.listen(), Error('swarm has been destroyed'))
 })
 
 test('join after destroy', async ({ throws }) => {
-  const swarm = hyperswarm()
+  const swarm = dwebswarm()
   swarm.listen()
   swarm.destroy()
   throws(() => {
@@ -67,7 +67,7 @@ test('join after destroy', async ({ throws }) => {
 })
 
 test('connect after destroy', async ({ throws }) => {
-  const swarm = hyperswarm()
+  const swarm = dwebswarm()
   swarm.listen()
   swarm.destroy()
   throws(() => {
@@ -80,7 +80,7 @@ test('connect after destroy', async ({ throws }) => {
 })
 
 test('connectivity after destroy', async ({ throws }) => {
-  const swarm = hyperswarm()
+  const swarm = dwebswarm()
   swarm.listen()
   swarm.destroy()
   throws(() => {

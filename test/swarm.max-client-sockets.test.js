@@ -3,10 +3,10 @@ const { randomBytes } = require('crypto')
 const { test } = require('tap')
 const { once, timeout } = require('nonsynchronous')
 const { dhtBootstrap } = require('./util')
-const hyperswarm = require('../swarm')
+const dwebswarm = require('../swarm')
 
 test('maxClientSockets defaults to Infinity', async ({ is }) => {
-  const swarm = hyperswarm({ bootstrap: [] })
+  const swarm = dwebswarm({ bootstrap: [] })
   const { maxClientSockets } = swarm
   is(maxClientSockets, Infinity)
   swarm.destroy()
@@ -14,14 +14,14 @@ test('maxClientSockets defaults to Infinity', async ({ is }) => {
 
 test('maxClientSockets option controls maximum amount of client sockets', async ({ is, fail }) => {
   const { bootstrap, closeDht } = await dhtBootstrap()
-  const swarm = hyperswarm({ bootstrap, maxClientSockets: 9 })
+  const swarm = dwebswarm({ bootstrap, maxClientSockets: 9 })
   const key = randomBytes(32)
   const swarms = []
 
   const { maxClientSockets } = swarm
   is(maxClientSockets, 9)
   for (var i = 0; i < maxClientSockets; i++) {
-    const s = hyperswarm({ bootstrap })
+    const s = dwebswarm({ bootstrap })
     swarms.push(s)
     s.join(key, {
       announce: true,
@@ -41,7 +41,7 @@ test('maxClientSockets option controls maximum amount of client sockets', async 
   }
   is(swarm.clientSockets, maxClientSockets)
 
-  const swarm2 = hyperswarm({ bootstrap })
+  const swarm2 = dwebswarm({ bootstrap })
   swarm2.join(key, {
     announce: true,
     lookup: false
@@ -63,7 +63,7 @@ test('maxClientSockets option controls maximum amount of client sockets', async 
 
 test('after maxClientSockets is exceeded, client sockets can connect to peers after client socket count is below threshhold again', async ({ is, fail }) => {
   const { bootstrap, closeDht } = await dhtBootstrap()
-  const swarm = hyperswarm({
+  const swarm = dwebswarm({
     bootstrap,
     maxClientSockets: 8
   })
@@ -73,7 +73,7 @@ test('after maxClientSockets is exceeded, client sockets can connect to peers af
   const { maxClientSockets } = swarm
   is(maxClientSockets, 8)
   for (var i = 0; i < maxClientSockets + 1; i++) {
-    const s = hyperswarm({ bootstrap })
+    const s = dwebswarm({ bootstrap })
     swarms.push(s)
     s.join(key, {
       announce: true,

@@ -3,14 +3,14 @@ const { randomBytes } = require('crypto')
 const { test } = require('tap')
 const { once } = require('nonsynchronous')
 const { dhtBootstrap } = require('./util')
-const hyperswarm = require('../swarm')
+const dwebswarm = require('../swarm')
 
 // this test is in its own file to avoid issues with process resources
 // being consumed by prior tests, leading to sometimes odd behaviour in node
 
 test('after maxPeers is exceeded, new peers can connect once existing peers have disconnected and peer count is below threshhold again', async ({ is }) => {
   const { bootstrap, closeDht } = await dhtBootstrap()
-  const swarm = hyperswarm({
+  const swarm = dwebswarm({
     bootstrap,
     maxPeers: 8
   })
@@ -24,7 +24,7 @@ test('after maxPeers is exceeded, new peers can connect once existing peers have
   const announcingPeers = maxPeers / 2
   const lookupPeers = maxPeers / 2
   for (var i = 0; i < announcingPeers; i++) {
-    const s = hyperswarm({ bootstrap })
+    const s = dwebswarm({ bootstrap })
     swarms.push(s)
     s.join(key, {
       announce: true,
@@ -47,7 +47,7 @@ test('after maxPeers is exceeded, new peers can connect once existing peers have
   is(swarm.open, true)
 
   for (var n = 0; n < lookupPeers; n++) {
-    const s = hyperswarm({ bootstrap })
+    const s = dwebswarm({ bootstrap })
     swarms.push(s)
     s.join(key, {
       announce: false,
@@ -68,7 +68,7 @@ test('after maxPeers is exceeded, new peers can connect once existing peers have
   ])
 
   is(swarm.peers, maxPeers - 1)
-  const swarm2 = hyperswarm({ bootstrap })
+  const swarm2 = dwebswarm({ bootstrap })
   swarm2.join(key, {
     announce: false,
     lookup: true

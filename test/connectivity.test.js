@@ -1,10 +1,10 @@
 'use strict'
 const { test } = require('tap')
 const { done, whenifyMethod, promisifyMethod } = require('nonsynchronous')
-const hyperswarm = require('../')
+const dwebswarm = require('../')
 
 test('when unable to bind', async ({ is }) => {
-  const swarm = hyperswarm()
+  const swarm = dwebswarm()
   const fauxErr = Error('problem binding')
   swarm.network.bind = (cb) => process.nextTick(cb, fauxErr)
   whenifyMethod(swarm, 'connectivity')
@@ -18,7 +18,7 @@ test('when unable to bind', async ({ is }) => {
 })
 
 test('when able to bind but unable to bootstrap', async ({ is }) => {
-  const swarm = hyperswarm()
+  const swarm = dwebswarm()
   const fauxErr = Error('problem holepunching')
   promisifyMethod(swarm, 'listen')
   await swarm.listen()
@@ -35,7 +35,7 @@ test('when able to bind but unable to bootstrap', async ({ is }) => {
 })
 
 test('when able to bind and bootstrap but unable to holepunch', async ({ is }) => {
-  const swarm = hyperswarm()
+  const swarm = dwebswarm()
   promisifyMethod(swarm, 'listen')
   await swarm.listen()
   swarm.network.discovery.holepunchable = (cb) => process.nextTick(cb, null, false)
@@ -51,7 +51,7 @@ test('when able to bind and bootstrap but unable to holepunch', async ({ is }) =
 })
 
 test('when able to bind, bootstrap and holepunch', async ({ is }) => {
-  const swarm = hyperswarm()
+  const swarm = dwebswarm()
   promisifyMethod(swarm, 'listen')
   await swarm.listen()
   swarm.network.discovery.holepunchable = (cb) => process.nextTick(cb, null, true)

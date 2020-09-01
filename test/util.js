@@ -1,7 +1,7 @@
 'use strict'
 const net = require('net')
 const UTP = require('utp-native')
-const dht = require('@hyperswarm/dht')
+const dht = require('@dwebswarm/dht')
 const { once } = require('nonsynchronous')
 
 async function dhtBootstrap () {
