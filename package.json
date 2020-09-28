@@ -4,12 +4,12 @@
   "description": "A distributed networking stack for connecting peers",
   "main": "swarm.js",
   "dependencies": {
-    "@dwebswarm/network": "^2.0.0",
+    "@dwebswarm/network": "git://github.com/DistributedWeb/network.git#bbf1bba07fcc12422816419fa471340e229996db",
     "shuffled-priority-queue": "^2.1.0",
     "utp-native": "^2.1.7"
   },
   "devDependencies": {
-    "@dwebswarm/dht": "^4.0.0",
+    "@dwebswarm/dht": "git://github.com/DistributedWeb/dht.git#97034eacbaf09e457ecb0cadb629a375f30de6a5",
     "events.once": "^2.0.2",
     "nonsynchronous": "^1.0.0",
     "standard": "^12.0.1",
