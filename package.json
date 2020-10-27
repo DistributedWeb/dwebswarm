@@ -1,7 +1,7 @@
 {
   "name": "dwebswarm",
   "version": "3.0.0",
-  "description": "A distributed networking stack for connecting peers",
+  "description": "API for finding and connecting to dWeb peers.",
   "main": "swarm.js",
   "dependencies": {
     "@dwebswarm/network": "git://github.com/DistributedWeb/network.git#ed85eac90890b5457b9a944e2d386ee75c490d06",
@@ -24,9 +24,9 @@
     "type": "git",
     "url": "https://github.com/dwebswarm/dwebswarm.git"
   },
-  "author": "Mathias Buus (@mafintosh)",
+  "author": "Peeps Labs <peepslabs@gmail.com>",
   "contributors": [
-    "David Mark Clements (@davidmarkclem)"
+    "Peeps Labs <peepslabs@gmail.com>"
   ],
   "license": "MIT",
   "bugs": {
