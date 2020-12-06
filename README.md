@@ -167,7 +167,7 @@ Use this method to deduplicate connections.
 When two swarms both announce and do lookups on the same topic you'll get duplicate connections
 between them (one client connection and one server connection each).
 
-If you exchange some sort of peer id between them you can use this method to make DWebswarm
+If you exchange some sort of peer id between them you can use this method to make dWebSwarm
 deduplicate those connection (ie drop one of them deterministically).
 
 If it returns true then this current connection was dropped due to deduplication and is auto removed.
